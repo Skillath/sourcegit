@@ -96,6 +96,24 @@ namespace SourceGit.Converters
                 return v;
             });
 
+        public sealed class BranchNameValueConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                return value;
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                var branchName = value as string;
+                return string.IsNullOrWhiteSpace(branchName) 
+                    ? branchName 
+                    : branchName.Replace(' ', '-');
+            }
+        }
+
+        public static readonly BranchNameValueConverter ToBranchName = new BranchNameValueConverter();
+
         [GeneratedRegex(@"^[\s\w]*(\d+)\.(\d+)[\.\-](\d+).*$")]
         private static partial Regex REG_GIT_VERSION();
 
